@@ -3,7 +3,6 @@
     <div class="wrapper">
       <div class="container">
         <img class="image" src="img/logo.png" alt="" />
-        <!-- <div class="image" src="img/logo.png" alt=""></div> -->
         <h1 class="title">Nouvelle Cuisine</h1>
         <div class="chefs">
           <table>
@@ -18,9 +17,7 @@
           </table>
         </div>
         <div class="menu">
-          <!-- <div class="accordion" id="accordion"> -->
           <div class="accordion" id="accordion">
-            <!-- NOTE: this might use class "card" -->
             <div
               v-for="(dish, idx) in menu.dishes"
               :key="dish.type"
@@ -60,16 +57,6 @@
           </div>
         </div>
       </div>
-
-      <!-- <div class="menu">
-          <div v-for="dish in menu.dishes" :key="dish.type" class="dish">
-            <div class="dish-type">{{ dish.type }}</div>
-            <div class="dish-name">{{ dish.name }} - {{ dish.country }}</div>
-            <div class="collapse">
-              {{ dish.text }}
-            </div>
-          </div>
-        </div> -->
     </div>
   </div>
 </template>
@@ -163,7 +150,7 @@ body {
   border-radius: 10px;
   margin: 30px 30px 0;
   padding: 30px 30px 0;
-  background: #fff url('/img/bg.jpg');
+  background: #fff url('/NouvelleCuisine/img/bg.jpg');
   box-shadow: inset 0 0 0 16px #fff, inset 0 0 0 17px var(--accent),
     inset 0 0 0 18px #fff, inset 0 0 0 19px var(--accent), inset 0 0 0 20px #fff,
     inset 0 0 0 21px var(--accent);
