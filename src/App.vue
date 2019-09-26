@@ -143,7 +143,7 @@ export default {
 
 html,
 body {
-  background: url('img/wall.jpg');
+  background: url('/NouvelleCuisine/img/wall.jpg');
   background-repeat: repeat;
   background-size: cover;
   overflow-y: overlay;
