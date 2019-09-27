@@ -200,15 +200,12 @@ body {
 .menu {
   border-top: 4px double black;
   margin: 30px 0;
-  // margin: 30px 30px 0;
-  // margin: 30px;
   padding: 10px 10px 30px;
 }
 
 .dish {
   position: relative;
   font-weight: bold;
-  // margin-bottom: 35px;
   padding: 20px;
   // transition: all linear 0.1s;
 
