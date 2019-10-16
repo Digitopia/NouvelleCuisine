@@ -1,5 +1,5 @@
 ---
-type: entrada
+type: Entrada
 name: Pastéis de Bacalhau
 country: pt
 ---

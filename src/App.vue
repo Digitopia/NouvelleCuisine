@@ -17,36 +17,55 @@
           </table>
         </div>
         <div class="menu">
-          <div class="accordion" id="accordion">
-            <div v-for="(dish, idx) in dishes" :key="dish.type" class="dish">
-              <div
-                data-toggle="collapse"
-                :data-target="`#dish-${idx}`"
-                aria-expanded="true"
-                :aria-controls="`collapse-${idx}`"
-                class="dish-header"
-              >
-                <div class="dish-type">{{ dish.type }}</div>
-                <div class="dish-name">{{ dish.name }}</div>
-                <CountryFlag
-                  :country="dish.country"
-                  size="normal"
-                  class="dish-country"
-                />
-              </div>
+          <div v-for="(dish, idx) in dishes" :key="dish.type" class="dish">
+            <div
+              data-toggle="modal"
+              :data-target="`#dish-${idx}`"
+              aria-expanded="true"
+              :aria-controls="`collapse-${idx}`"
+              class="dish-header"
+            >
+              <div class="dish-type">{{ dish.type }}</div>
+              <div class="dish-name">{{ dish.name }}</div>
+              <CountryFlag
+                :country="dish.country"
+                :size="flagSize"
+                class="dish-country"
+              />
+            </div>
 
-              <div
-                :id="`dish-${idx}`"
-                class="collapse"
-                :aria-labelledby="`dish-${idx}`"
-                data-parent="#accordion"
-              >
-                <div class="card-body dish-text">
-                  <p v-html="dish.text"></p>
-                  <!-- <img
-                    preload
-                    v-holder="'img=100px200?bg=f8f8f8&text=image goes here'"
-                  /> -->
+            <div
+              class="modal fade"
+              :id="`dish-${idx}`"
+              tabindex="-1"
+              role="dialog"
+              :aria-labelledby="`dish-${idx}-title`"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" :id="`dish-${idx}-title`">
+                      {{ dish.type }} - {{ dish.name }}
+                      <CountryFlag
+                        :country="dish.country"
+                        class="dish-country-title"
+                      />
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-body dish-text">
+                      <p v-html="dish.text"></p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -69,8 +88,8 @@ export default {
 
   data() {
     return {
-      chef: 'Micheline',
-      subchef: 'Michelão',
+      chef: 'Micheline 👩‍🍳',
+      subchef: 'Michelão 👨🏾‍🍳',
       pratos: [
         'pratos/vichyssoise.md',
         'pratos/pasteis-bacalhau.md',
@@ -79,11 +98,15 @@ export default {
         'pratos/gelado-limao.md',
       ],
       dishes: [],
+      flagSize: 'big',
     }
   },
 
   async created() {
-    // this.pratos.forEach(prato => {
+    window.addEventListener('resize', () => {
+      this.resize()
+    })
+
     for (var i = 0; i < this.pratos.length; i++) {
       const prato = this.pratos[i]
       const response = await fetch(prato)
@@ -96,6 +119,16 @@ export default {
         ...metadata,
       })
     }
+  },
+
+  mounted() {
+    this.resize()
+  },
+
+  methods: {
+    resize() {
+      this.flagSize = window.innerWidth < 600 ? 'normal' : 'big'
+    },
   },
 }
 </script>
@@ -124,13 +157,13 @@ body {
   text-align: center;
   margin-top: 60px;
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 600px;
 }
 
 .wrapper {
   border-radius: 10px;
-  margin: 30px 30px 0;
-  padding: 30px 30px 0;
+  margin: 20px 20px 0;
+  padding: 20px 20px 0;
   background: #fff url('/NouvelleCuisine/img/bg.jpg');
   box-shadow: inset 0 0 0 16px #fff, inset 0 0 0 17px var(--accent),
     inset 0 0 0 18px #fff, inset 0 0 0 19px var(--accent), inset 0 0 0 20px #fff,
@@ -138,12 +171,23 @@ body {
 }
 
 .container {
-  width: 90%;
+  width: 85%;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    width: 100%;
+  }
+  .menu {
+    margin: 10px;
+    padding: 5px !important;
+  }
 }
 
 .image {
   border-radius: 50%;
-  width: 140px;
+  width: 10vmin;
+  min-width: 70px;
   margin: 20px auto;
   box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--accent), 0 0 0 5px #fff,
     0 0 0 6px var(--accent), 0 0 0 7px #fff, 0 0 0 8px var(--accent);
@@ -151,10 +195,9 @@ body {
 
 .title {
   font-weight: 700;
-  margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 26px;
+  letter-spacing: 3px;
+  font-size: 1.6rem;
   text-shadow: 1px 1px 0 #fff, 3px 3px 0 var(--accent);
 }
 
@@ -181,50 +224,64 @@ body {
 .menu {
   border-top: 4px double black;
   margin: 30px 0;
-  padding: 10px 10px 30px;
+  padding: 0.8em 0.8em 2em;
 }
 
 .dish {
   position: relative;
+  text-align: center;
+  margin: 0 auto;
   font-weight: bold;
-  padding: 20px;
-  // transition: all linear 0.1s;
-
+  margin-bottom: 2em;
   .dish-header {
     &:hover {
       cursor: pointer;
       text-decoration: underline;
-      // outline: 1px solid var(--accent);
     }
   }
 
   .dish-type {
-    font-size: 1.2em;
+    width: 100%;
+    font-size: 1.1em;
     text-transform: uppercase;
   }
   .dish-name {
     font-weight: normal;
-    font-size: 1.1em;
+    font-size: 1em;
     // padding: 10px;
-    line-height: 1em;
+    line-height: 0.9em;
     color: #333;
   }
 
   .dish-country {
     position: absolute;
-    right: 10px;
-    top: 25px;
-    // outline: 0.1px solid black;
+    top: -5px;
+    right: 0;
+    opacity: 0.8;
+    border-radius: 2px !important;
   }
 
   .dish-text {
     font-weight: normal;
     text-align: left;
-    background: rgba(213, 193, 154, 0.2);
-    margin-top: 15px;
     &:hover {
       text-decoration: none !important;
     }
   }
+}
+
+.dish-country-title {
+  position: relative;
+  visibility: middle;
+  top: 8px;
+}
+
+.modal-title {
+  width: 100%;
+  text-align: center;
+}
+
+pre {
+  font-size: 0.8em;
 }
 </style>

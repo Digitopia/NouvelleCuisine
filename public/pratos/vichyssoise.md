@@ -1,10 +1,9 @@
 ---
-type: sopa
+type: Sopa
 name: Vichyssoise
 country: fr
 ---
-<div>
-    Objectivo: <h5>Trabalhar a divisão ternária</h5>
+<div> Objectivo: <h5>Trabalhar a divisão ternária</h5>
     <ul>
         <li>começar por identificar o primeiro tempo</li>
         <li>tocar em conjunto o primeiro tempo</li>
