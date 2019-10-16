@@ -39,7 +39,7 @@
      "density": "4.0"
     }
    ],
-   "start_url": "/?utm_source=homescreen",
+   "start_url": "index.html?utm_source=homescreen",
    "display": "fullscreen",
    "background_color": "#f3f3f3",
    "theme_color": "#ffd333"
