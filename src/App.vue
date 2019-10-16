@@ -91,11 +91,11 @@ export default {
       chef: 'Micheline 👩‍🍳',
       subchef: 'Michelão 👨🏾‍🍳',
       pratos: [
-        'pratos/vichyssoise.md',
-        'pratos/pasteis-bacalhau.md',
-        'pratos/sushi.md',
-        'pratos/rodizio.md',
-        'pratos/gelado-limao.md',
+        'pratos/vichyssoise.html',
+        'pratos/pasteis-bacalhau.html',
+        'pratos/sushi.html',
+        'pratos/rodizio.html',
+        'pratos/gelado-limao.html',
       ],
       dishes: [],
       flagSize: 'big',
@@ -111,12 +111,13 @@ export default {
       const prato = this.pratos[i]
       const response = await fetch(prato)
       let data = await response.text()
-      const converter = new window.showdown.Converter({ metadata: true })
-      const html = converter.makeHtml(data)
-      const metadata = converter.getMetadata()
+      const el = document.createElement('html')
+      el.innerHTML = data
       this.dishes.push({
-        text: html,
-        ...metadata,
+        type: el.querySelector('meta[name="prato-type"]').content,
+        name: el.querySelector('meta[name="prato-name"]').content,
+        country: el.querySelector('meta[name="prato-country"]').content,
+        text: el.querySelector('.prato-text').innerHTML,
       })
     }
   },
