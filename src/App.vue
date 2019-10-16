@@ -8,21 +8,17 @@
           <table>
             <tr class="chef">
               <th>Chef</th>
-              <td>{{ menu.chef }}</td>
+              <td>{{ chef }}</td>
             </tr>
             <tr class="subchef">
               <th>Subchef</th>
-              <td>{{ menu.subchef }}</td>
+              <td>{{ subchef }}</td>
             </tr>
           </table>
         </div>
         <div class="menu">
           <div class="accordion" id="accordion">
-            <div
-              v-for="(dish, idx) in menu.dishes"
-              :key="dish.type"
-              class="dish"
-            >
+            <div v-for="(dish, idx) in dishes" :key="dish.type" class="dish">
               <div
                 data-toggle="collapse"
                 :data-target="`#dish-${idx}`"
@@ -46,11 +42,11 @@
                 data-parent="#accordion"
               >
                 <div class="card-body dish-text">
-                  <p>{{ dish.text }}</p>
-                  <img
+                  <p v-html="dish.text"></p>
+                  <!-- <img
                     preload
                     v-holder="'img=100px200?bg=f8f8f8&text=image goes here'"
-                  />
+                  /> -->
                 </div>
               </div>
             </div>
@@ -73,47 +69,32 @@ export default {
 
   data() {
     return {
-      menu: {
-        chef: 'Micheline',
-        subchef: 'Michelão',
-        dishes: [
-          {
-            type: 'sopa',
-            name: 'Vichyssoise',
-            text:
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, beatae.',
-            country: 'fr',
-          },
-          {
-            type: 'entrada',
-            name: 'Pastéis de Bacalhau',
-            text:
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, beatae.',
-            country: 'pt',
-          },
-          {
-            type: '1º Prato',
-            name: 'Sushi',
-            text:
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, beatae.',
-            country: 'jp',
-          },
-          {
-            type: '2º Prato',
-            name: 'Rodízio à Brasileira',
-            text:
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, beatae.',
-            country: 'br',
-          },
-          {
-            type: 'Sobremesa',
-            name: 'Gelado de limão',
-            text:
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, beatae.',
-            country: 'it',
-          },
-        ],
-      },
+      chef: 'Micheline',
+      subchef: 'Michelão',
+      pratos: [
+        'pratos/vichyssoise.md',
+        'pratos/pasteis-bacalhau.md',
+        'pratos/sushi.md',
+        'pratos/rodizio.md',
+        'pratos/gelado-limao.md',
+      ],
+      dishes: [],
+    }
+  },
+
+  async created() {
+    // this.pratos.forEach(prato => {
+    for (var i = 0; i < this.pratos.length; i++) {
+      const prato = this.pratos[i]
+      const response = await fetch(prato)
+      let data = await response.text()
+      const converter = new window.showdown.Converter({ metadata: true })
+      const html = converter.makeHtml(data)
+      const metadata = converter.getMetadata()
+      this.dishes.push({
+        text: html,
+        ...metadata,
+      })
     }
   },
 }
@@ -143,7 +124,7 @@ body {
   text-align: center;
   margin-top: 60px;
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 800px;
 }
 
 .wrapper {
@@ -237,6 +218,8 @@ body {
   }
 
   .dish-text {
+    font-weight: normal;
+    text-align: left;
     background: rgba(213, 193, 154, 0.2);
     margin-top: 15px;
     &:hover {
