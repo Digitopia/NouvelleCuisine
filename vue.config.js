@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/NouvelleCuisine/',
+  publicPath: '/nouvellecuisine/',
   pwa: {
     themeColor: '#ffd333',
   },

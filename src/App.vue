@@ -145,7 +145,7 @@ export default {
 
 html,
 body {
-  background: url('/NouvelleCuisine/img/wall.jpg');
+  background: url('/nouvellecuisine/img/wall.jpg');
   background-repeat: repeat;
   background-size: cover;
   overflow-y: overlay;
@@ -165,7 +165,7 @@ body {
   border-radius: 10px;
   margin: 20px 20px 0;
   padding: 20px 20px 0;
-  background: #fff url('/NouvelleCuisine/img/bg.jpg');
+  background: #fff url('/nouvellecuisine/img/bg.jpg');
   box-shadow: inset 0 0 0 16px #fff, inset 0 0 0 17px var(--accent),
     inset 0 0 0 18px #fff, inset 0 0 0 19px var(--accent), inset 0 0 0 20px #fff,
     inset 0 0 0 21px var(--accent);
