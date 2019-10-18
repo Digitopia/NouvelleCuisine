@@ -88,8 +88,8 @@ export default {
 
   data() {
     return {
-      chef: 'Micheline 👩‍🍳',
-      subchef: 'Michelão 👨🏾‍🍳',
+      chef: 'Micheline 👨🏻‍🍳',
+      subchef: 'Michelão 👨🏻‍🍳',
       pratos: [
         'pratos/vichyssoise.html',
         'pratos/pasteis-bacalhau.html',
